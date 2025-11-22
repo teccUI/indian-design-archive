@@ -60,12 +60,17 @@ const SEARCH_QUERIES = [
 const FeaturePanel: React.FC = () => {
   const [photo, setPhoto] = useState<PexelsPhoto | null>(null);
   const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [error, setError] = useState(false);
+
+
+  const fallbackToLocal = useCallback(() => {
+    console.log('Using fallback image');
+    setPhoto(FALLBACK_PHOTO);
+    setLoading(false);
+  }, []);
 
   const fetchPexelsImage = useCallback(async () => {
     setLoading(true);
-    setError(false);
+
 
     // Randomize page to get different images
     const page = Math.floor(Math.random() * 50) + 1;
@@ -79,9 +84,10 @@ const FeaturePanel: React.FC = () => {
     if (!apiKey) {
       console.warn('Pexels API key not found in environment variables. Using fallback image.');
       fallbackToLocal();
-      setLoading(false);
       return;
     }
+
+    console.log(`Fetching Pexels image for query: "${query}" (Page: ${page})`);
 
     try {
       const response = await fetch(`https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=1&page=${page}`, {
@@ -91,27 +97,26 @@ const FeaturePanel: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
       }
 
       const data = await response.json();
       if (data.photos && data.photos.length > 0) {
+        console.log('Pexels image fetched successfully:', data.photos[0].id);
         setPhoto(data.photos[0]);
       } else {
-        // Fallback to local constant if API returns empty
+        console.warn('No photos found for query:', query);
         fallbackToLocal();
       }
     } catch (err) {
       console.error('Failed to fetch from Pexels:', err);
       fallbackToLocal();
     } finally {
-      // Keep loading state true for image onLoad to handle
+      // If we set photo, loading will be handled by onLoad. 
+      // If we fell back, we already set loading to false in fallbackToLocal.
+      // However, if we successfully fetched a photo, we want to keep loading true until the image loads.
     }
-  }, []);
-
-  const fallbackToLocal = () => {
-    setPhoto(FALLBACK_PHOTO);
-  };
+  }, [fallbackToLocal]);
 
   useEffect(() => {
     fetchPexelsImage();
@@ -119,6 +124,11 @@ const FeaturePanel: React.FC = () => {
 
   const handleImageLoad = () => {
     setLoading(false);
+  };
+
+  const handleImageError = () => {
+    console.error('Image failed to load, switching to fallback');
+    fallbackToLocal();
   };
 
   return (
@@ -172,6 +182,7 @@ const FeaturePanel: React.FC = () => {
                 ${loading ? 'opacity-0 scale-105' : 'opacity-100 scale-100 grayscale group-hover/image:grayscale-0 group-hover/image:scale-[0.96]'}
               `}
               onLoad={handleImageLoad}
+              onError={handleImageError}
             />
 
             {/* Metadata Overlay - Fade in when loaded */}
