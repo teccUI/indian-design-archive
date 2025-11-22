@@ -70,7 +70,7 @@ Description: ${data.description}
 Submitted via Web Interface
 `;
 
-    window.location.href = `mailto:rajpau075@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:rajpaul075@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setActiveModal(null);
   };
 
