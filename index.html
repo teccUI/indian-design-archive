@@ -1,56 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Torino Design Archive</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-            },
-            colors: {
-              canvas: '#111111',
-              primary: '#FFFFFF',
-              secondary: '#999999',
-            },
-            letterSpacing: {
-              tighter: '-0.05em',
-              tight: '-0.025em',
-            }
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Torino Design Archive</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
           },
+          colors: {
+            canvas: '#111111',
+            primary: '#FFFFFF',
+            secondary: '#999999',
+          },
+          letterSpacing: {
+            tighter: '-0.05em',
+            tight: '-0.025em',
+          }
         },
+      },
+    }
+  </script>
+  <style>
+    body {
+      background-color: #111111;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
+    }
+
+    /* Hide default cursor on desktop to use custom Sharpie cursor */
+    @media (hover: hover) and (pointer: fine) {
+      * {
+        cursor: none !important;
       }
-    </script>
-    <style>
-      body {
-        background-color: #111111;
-        color: #ffffff;
-        overflow-x: hidden;
-      }
-      /* Hide scrollbar for Chrome, Safari and Opera */
-      .no-scrollbar::-webkit-scrollbar {
-          display: none;
-      }
-      /* Hide scrollbar for IE, Edge and Firefox */
-      .no-scrollbar {
-          -ms-overflow-style: none;  /* IE and Edge */
-          scrollbar-width: none;  /* Firefox */
-      }
-      
-      /* Hide default cursor on desktop to use custom Sharpie cursor */
-      @media (hover: hover) and (pointer: fine) {
-        * {
-          cursor: none !important;
-        }
-      }
-    </style>
+    }
+  </style>
   <script type="importmap">
 {
   "imports": {
@@ -60,10 +66,11 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
 </head>
-  <body>
-    <div id="root"></div>
+
+<body>
+  <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 </body>
+
 </html>
